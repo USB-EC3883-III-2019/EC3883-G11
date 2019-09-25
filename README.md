@@ -1,9 +1,10 @@
-# <Título del Repositorio>
-Este repositorio es una plantilla para ser usada en la materia ECXXXX. Modifique el contenido de esta plantilla para adaptarlo a su proyecto manteniendo la estructura de carpetas que se explica en [Estructura del repositorio](#Estructura-del-repositorio).
+# <EC3883-G11 SOLINDAR (1era Parte)>
+
+Repositorio para la materia cursada en el período Septiembre-Diciembre 2019, EC3883-Laboratorio de proyectos III de la carrera Ingeniería Electrónica de la Universidad Simón Bolívar.
 
 ## Integrantes del equipo
-* 02-34759 Novel Antonio Certad Hernández
-* 11-55555 Alan Brito Delgado
+* 12-10423 Miguel Labrador
+* 13-10199 José Calderón
 
 ## Estructura del repositorio
 ### docs/
