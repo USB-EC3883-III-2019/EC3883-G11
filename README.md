@@ -1,4 +1,4 @@
-# <EC3883-G11 SOLINDAR (1era Parte)>
+# EC3883-G11 SOLINDAR (1era Parte)
 
 Repositorio para la materia cursada en el período Septiembre-Diciembre 2019, EC3883-Laboratorio de proyectos III de la carrera Ingeniería Electrónica de la Universidad Simón Bolívar.
 
