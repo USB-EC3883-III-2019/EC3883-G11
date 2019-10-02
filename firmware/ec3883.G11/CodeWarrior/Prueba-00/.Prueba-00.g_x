@@ -1,0 +1,31 @@
+<CodeGenerationInfo>
+  <ToolchainSettings>
+    <option>
+      <name>PE_G_4PEx_ToolChain_Compiler_SearchUserPaths</name>
+      <values lines_count="2">
+        <Line>"${ProjDirPath}/Sources"</Line>
+        <Line>"${ProjDirPath}/Generated_Code"</Line>
+      </values>
+    </option>
+  </ToolchainSettings>
+  <GeneratedFilesList>
+    <GeneratedByPE>
+      <File Name="Generated_Code/Vectors.c" FileDate="2019-10-01, 21:47:59" FileAge="1569982679369" FileType="45637" CompNumb="4" />
+      <File Name="Documentation/Prueba-00_Settings.xml" FileDate="2019-10-01, 21:47:59" FileAge="1569982679452" FileType="3072" />
+      <File Name="Project_Settings/Linker_Files/ProcessorExpert.prm" FileDate="2019-10-01, 21:47:59" FileAge="1569982679374" FileType="8" CompNumb="4" />
+      <File Name="Generated_Code/PE_Error.h" FileDate="2019-10-01, 21:47:59" FileAge="1569982679418" FileType="45637" />
+      <File Name="Documentation/Prueba-00_SIGNALS.txt" FileDate="2019-10-01, 21:47:59" FileAge="1569982679428" FileType="3072" />
+      <File Name="Documentation/Prueba-00.txt" FileDate="2019-10-01, 21:47:59" FileAge="1569982679571" FileType="3072" />
+      <File Name="Generated_Code/PE_Types.h" FileDate="2019-10-01, 21:47:59" FileAge="1569982679423" FileType="45637" />
+      <File Name="Generated_Code/IO_Map.h" FileDate="2019-10-01, 21:47:59" FileAge="1569982679399" FileType="45637" />
+      <File Name="Sources/main.c" FileDate="2019-10-01, 21:47:59" FileAge="1569982679389" FileType="128" />
+      <File Name="Sources/Events.h" FileDate="2019-10-01, 21:47:59" FileAge="1569982679356" FileType="131328" />
+      <File Name="Generated_Code/Cpu.h" FileDate="2019-10-01, 21:47:59" FileAge="1569982679385" FileType="45637" CompNumb="4" />
+      <File Name="Generated_Code/IO_Map.c" FileDate="2019-10-01, 21:47:59" FileAge="1569982679393" FileType="45637" />
+      <File Name="Sources/Events.c" FileDate="2019-10-01, 21:47:59" FileAge="1569982679348" FileType="131328" />
+      <File Name="Generated_Code/Cpu.c" FileDate="2019-10-01, 21:47:59" FileAge="1569982679379" FileType="45637" CompNumb="4" />
+      <File Name="Generated_Code/PE_Const.h" FileDate="2019-10-01, 21:47:59" FileAge="1569982679414" FileType="45637" />
+    </GeneratedByPE>
+  </GeneratedFilesList>
+  <CodeGenReference>1</CodeGenReference>
+</CodeGenerationInfo>
