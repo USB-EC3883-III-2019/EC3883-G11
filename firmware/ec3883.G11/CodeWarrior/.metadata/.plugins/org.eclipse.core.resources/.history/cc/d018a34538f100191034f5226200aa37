@@ -1,0 +1,2 @@
+@echo off
+echo 'Executing target #6 ../Generated_Code/Bit2.c'

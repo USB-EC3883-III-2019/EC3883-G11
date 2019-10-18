@@ -6,6 +6,6 @@
 
 export HC08ToolsEnv=$(CWInstallLocationEnv)/MCU/prog
 export GNU_Make_Install_DirEnv=$(CWInstallLocationEnv)/gnu/bin
-export ProjDirPath=C:/Users/user.LC.000/workspace/P3G10/prueba_00
-export CWInstallLocationEnv=C:/Program Files/Freescale/CW MCU v10.6
+export ProjDirPath=C:/Users/p/Documents/Universidad/Materias/Lab de Proyectos/Proyectos 3/firmware/EC3883.G11/CodeWarrior/Prueba-00
+export CWInstallLocationEnv=C:/Freescale/CW MCU v10.7
 export MCUToolsBaseDirEnv=$(CWInstallLocationEnv)/MCU

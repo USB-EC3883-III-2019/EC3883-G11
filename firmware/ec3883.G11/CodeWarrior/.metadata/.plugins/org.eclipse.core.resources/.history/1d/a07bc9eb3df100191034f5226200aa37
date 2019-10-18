@@ -1,0 +1,4 @@
+ERROR L1822: Symbol _DSFLOAT in file C:/Users/p/Documents/Universidad/Materias/Lab de Proyectos/Proyectos 3/firmware/EC3883.G11/CodeWarrior/Prueba-01/FLASH/Sources\Events_c.obj is undefined
+ERROR L1822: Symbol _DMUL_RC in file C:/Users/p/Documents/Universidad/Materias/Lab de Proyectos/Proyectos 3/firmware/EC3883.G11/CodeWarrior/Prueba-01/FLASH/Sources\Events_c.obj is undefined
+ERROR L1822: Symbol _DDIV_RC in file C:/Users/p/Documents/Universidad/Materias/Lab de Proyectos/Proyectos 3/firmware/EC3883.G11/CodeWarrior/Prueba-01/FLASH/Sources\Events_c.obj is undefined
+ERROR L1822: Symbol _DSTRUNC in file C:/Users/p/Documents/Universidad/Materias/Lab de Proyectos/Proyectos 3/firmware/EC3883.G11/CodeWarrior/Prueba-01/FLASH/Sources\Events_c.obj is undefined

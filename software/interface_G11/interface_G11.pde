@@ -12,6 +12,12 @@
 int cha0, cha1, cha2, cha3, cha01=300,cha11=300, cha21=300,cha31=300;
 float x1=10,x2=10;
 String[] lines;
+//Variables para adquisición de datos
+Serial myPort;  // Create object from Serial class
+int val;      // Data received from the serial port
+byte [][] datos= new byte[73][4];
+int IR;//Infra Rojo
+int US;// Ultra Sonido
 
 void setup()
 {
@@ -21,18 +27,53 @@ void setup()
   ancho= width;
   background(255,255,255);
   dibujo();
-  
+
+String portName = Serial.list()[0]; 
+  myPort = new Serial(this, portName, 115200);
 
 
 }
   
 void draw() {
     
-    
-    dibujo();
+    byte[] inBuffer = new byte[4];   // Se determinan la cantidad de bytes esperados: tamaño de buffer
+for(int counter=0;counter<72;counter++)
+          {
+            while (myPort.available() > 0 ) {  // Cada vez que haya algo en el puerto se lee
+            inBuffer = myPort.readBytes();  // Y se guarda en inBuffer
+             myPort.readBytes(inBuffer);
+            
+            if (inBuffer != null) {
+            
+            datos[counter]=inBuffer;
+           println(int(datos[counter][0]),binary(datos[counter][1]),binary(datos[counter][2]),binary(datos[counter][3]));
+            
+              dibujo();
     strokeWeight(2);
     stroke(255, 255, 255);
-    line(500,350,500+300*cos(second()*PI/30),350+300*sin(PI/30*second()));
+   //Línea de posición
+    line(500,350,500+340*cos(datos[counter][0]*PI/48+3*PI/4),350+340*sin(PI/48*datos[counter][0]+3*PI/4));
+    stroke(#FF0000);
+    //Punto Referencial de SENSOR INFRA ROJO
+    IR=(int((datos[counter][2] & 31))<< 7) + (int((datos[counter][3] & 127)));
+    IR=IR*16;
+    IR=int(2007193.03*pow(IR,-1.201));
+    IR=int(map(float(IR),0,80,0,340));
+    circle(500+IR*cos(datos[counter][0]*PI/48+3*PI/4),350+IR*sin(PI/48*datos[counter][0]+3*PI/4),10);
+     stroke(#00ff00);
+    //Punto Referencial de SENSOR ULTRA SONIDO
+    US=(int((datos[counter][1] & 127))<< 2) + (int((datos[counter][2] & 96))>>5);
+    println((US));
+    US=int(US*61.035156/58);
+    println((US));
+    US=int(map(float(US),0,80,0,340));
+    circle(500+US*cos(datos[counter][0]*PI/48+3*PI/4),350+US*sin(PI/48*datos[counter][0]+3*PI/4),5);
+    
+    
+            }
+            }
+            }
+    
     
   
   

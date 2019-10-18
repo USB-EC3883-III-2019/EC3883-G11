@@ -1,0 +1,2 @@
+@echo off
+echo 'Executing target #4 ../Generated_Code/AD1.c'
