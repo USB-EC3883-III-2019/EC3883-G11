@@ -5,73 +5,81 @@
   import processing.serial.*;   // Importamos la libreria Serial
   
   /*{!!--Variables--!!}*/
-  
-  int alto, ancho; //Dimensiones de la pantalla
+    
+  int alto, ancho;                           //Dimensiones de la pantalla
+  float radio, angulo_ini, angulo_fin;       //Dimensiones de la pantalla
+  int [] blue={0, 187, 252};
+  int [] green={0, 255, 0};
+  int [] violet={255, 0, 255};
+  int [] white={255, 255, 255};
+
+  byte[] inBuffer = new byte[4];             // Se determinan la cantidad de bytes esperados: tamaño de buffer
 
 
-int cha0, cha1, cha2, cha3, cha01=300,cha11=300, cha21=300,cha31=300;
-float x1=10,x2=10;
-String[] lines;
-//Variables para adquisición de datos
-Serial myPort;  // Create object from Serial class
-int val;      // Data received from the serial port
-byte [][] datos= new byte[73][4];
-int IR;//Infra Rojo
-int US;// Ultra Sonido
-
+  int cha0, cha1, cha2, cha3, cha01=300,cha11=300, cha21=300,cha31=300;
+  float x1=10,x2=10;
+  String[] lines;
+  //Variables para adquisición de datos
+  Serial myPort;  // Create object from Serial class
+  int val;      // Data received from the serial port
+  byte [][] datos= new byte[73][4];
+  int IR;//Infra Rojo
+  int US;// Ultra Sonido
+  byte [] prueba={0,40,41,50};
 void setup()
 {
   
   size(1000, 700);
   alto = height;
   ancho= width;
-  background(255,255,255);
+  radio=6*alto/(2*7);
+  angulo_ini=-PI/4;
+  angulo_fin=PI/4;
   dibujo();
 
-String portName = Serial.list()[0]; 
-  myPort = new Serial(this, portName, 115200);
+  //String portName = Serial.list()[0]; 
+  //myPort = new Serial(this, portName, 115200);
 
 
 }
   
 void draw() {
     
-    byte[] inBuffer = new byte[4];   // Se determinan la cantidad de bytes esperados: tamaño de buffer
-for(int counter=0;counter<72;counter++)
+    for(int counter=0;counter<72;counter++)
           {
-            while (myPort.available() > 0 ) {  // Cada vez que haya algo en el puerto se lee
-            inBuffer = myPort.readBytes();  // Y se guarda en inBuffer
-             myPort.readBytes(inBuffer);
+            //while (myPort.available() > 0 ) {  // Cada vez que haya algo en el puerto se lee
+            inBuffer = prueba;//myPort.readBytes();     // Y se guarda en inBuffer
+             //myPort.readBytes(inBuffer);
             
             if (inBuffer != null) {
             
-            datos[counter]=inBuffer;
-           println(int(datos[counter][0]),binary(datos[counter][1]),binary(datos[counter][2]),binary(datos[counter][3]));
+            datos[counter]=inBuffer;           //Se almacena en datos la trama con los mensajes
+            println(int(datos[counter][0]),binary(datos[counter][1]),binary(datos[counter][2]),binary(datos[counter][3]));
             
-              dibujo();
-    strokeWeight(2);
-    stroke(255, 255, 255);
-   //Línea de posición
-    line(500,350,500+340*cos(datos[counter][0]*PI/48+3*PI/4),350+340*sin(PI/48*datos[counter][0]+3*PI/4));
-    stroke(#FF0000);
-    //Punto Referencial de SENSOR INFRA ROJO
-    IR=(int((datos[counter][2] & 31))<< 7) + (int((datos[counter][3] & 127)));
-    IR=IR*16;
-    IR=int(2007193.03*pow(IR,-1.201));
-    IR=int(map(float(IR),0,80,0,340));
-    circle(500+IR*cos(datos[counter][0]*PI/48+3*PI/4),350+IR*sin(PI/48*datos[counter][0]+3*PI/4),10);
-     stroke(#00ff00);
-    //Punto Referencial de SENSOR ULTRA SONIDO
-    US=(int((datos[counter][1] & 127))<< 2) + (int((datos[counter][2] & 96))>>5);
-    println((US));
-    US=int(US*61.035156/58);
-    println((US));
-    US=int(map(float(US),0,80,0,340));
-    circle(500+US*cos(datos[counter][0]*PI/48+3*PI/4),350+US*sin(PI/48*datos[counter][0]+3*PI/4),5);
+            dibujo();
+            strokeWeight(2);
+            stroke(255, 255, 255);
+           //Línea de posición
+            line(500,350,500+340*cos(datos[counter][0]*PI/48+3*PI/4),350+340*sin(PI/48*datos[counter][0]+3*PI/4));
+            stroke(#FF0000);
+            //Punto Referencial de SENSOR INFRA ROJO
+            IR=(int((datos[counter][2] & 31))<< 7) + (int((datos[counter][3] & 127)));
+            IR=IR*16;
+            IR=int(2007193.03*pow(IR,-1.201));
+            IR=int(map(float(IR),0,80,0,340));
+            circle(500+IR*cos(datos[counter][0]*PI/48+3*PI/4),350+IR*sin(PI/48*datos[counter][0]+3*PI/4),10);
+             stroke(#00ff00);
+            //Punto Referencial de SENSOR ULTRA SONIDO
+            US=(int((datos[counter][1] & 127))<< 2) + (int((datos[counter][2] & 96))>>5);
+            println((US));
+            US=int(US*61.035156/58);
+            println((US));
+            US=int(map(float(US),0,80,0,340));
+            circle(500+US*cos(datos[counter][0]*PI/48+3*PI/4),350+US*sin(PI/48*datos[counter][0]+3*PI/4),5);
     
     
             }
-            }
+           // }
             }
     
     
@@ -237,31 +245,44 @@ for(int counter=0;counter<72;counter++)
 // Funcion encargada de todos los objetos mostrados en pantalla
 void dibujo()
 {
-  clear(); 
-  background(0);
+    clear(); 
+    background(0);
   
     strokeWeight(1);
     stroke(0, 187, 252);
-
-    arc(500, 350, 680, 680,0, 2*PI); 
-      
-    for(int i=0;i<=7;i++){
+    
     noFill();
-    arc(500, 350, 600-i*86, 600-i*86,0, 2*PI); 
+    arc(ancho/2, alto/2, alto-20, alto-20,angulo_ini, angulo_fin); 
+      
+    for(int k=0;k<=7;k++){
+    noFill();
+    arc(ancho/2, alto/2, alto-100-k*86, alto-100-k*86,0, 2*PI); 
     }
     stroke(0, 150, 255);
     point(500,350); 
     
-    for(int i=0;i<=11;i++){
+    for(int k=0;k<=11;k++){
     stroke(0, 150, 255);
-    line(500,350,500+300*cos(i*PI/6),350+300*sin(PI/6*i));
+    line(ancho/2,alto/2,ancho/2+radio*cos(k*PI/6),alto/2+radio*sin(PI/6*k));
     }
+   
 
-    for(int i=0;i<=11;i++){
+    for(int k=0;k<=11;k++){
     strokeWeight(2);
-    line(500+310*cos(i*PI/6),350+310*sin(PI/6*i),500+330*cos(i*PI/6),350+330*sin(PI/6*i));
-  
+    line(ancho/2+(radio+10)*cos(k*PI/6),alto/2+(radio+10)*sin(PI/6*k),ancho/2+(radio+30)*cos(k*PI/6),alto/2+(radio+30)*sin(PI/6*k));  
     }
+    
+    for(int k=0;k<=119;k++){
+    stroke(0, 150, 255);
+    strokeWeight(1);
+    line(ancho/2+(radio+15)*cos(k*PI/60),alto/2+(radio+15)*sin(PI/60*k),ancho/2+(radio+25)*cos(k*PI/60),alto/2+(radio+25)*sin(PI/60*k));
+    }
+    
+  
+    boton(500+450,350,"SONAR",500+430,300+5,blue);
+    boton(500+450,350+100,"LIDAR",500+430,300+105, green);
+    boton(500+450,350+200,"FUSION",500+430,300+205, violet);
+    boton(500+450,350+300,"Save",500+430,300+305, white);
     
   
 
@@ -338,12 +359,12 @@ void dibujo()
 //  }
   
 
-//void boton(int x, int y, String texto, int xt, int yt)  //dibujar un bonton
-//{
-//  stroke(0);
-//  fill(0,116,255);
-//  ellipse(x,y,70,70);
-//  fill(255);
-//  textSize(12);
-//  text(texto,xt,yt);
-//}
+void boton(int x, int y, String texto, int xt, int yt, int [] Color)  //dibujar un bonton
+{
+  stroke(0);
+  fill(Color[0],Color[1],Color[2]);
+  ellipse(x,y,70,70);
+  fill(255);
+  textSize(12);
+  text(texto,xt,yt);
+}
