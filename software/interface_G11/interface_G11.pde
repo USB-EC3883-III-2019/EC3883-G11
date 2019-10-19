@@ -25,7 +25,7 @@
   byte [][] datos= new byte[73][4];
   int IR;//Infra Rojo
   int US;// Ultra Sonido
-  byte [] prueba={0,40,41,50};
+  byte [] prueba={72,40,41,50};
 void setup()
 {
   
@@ -33,7 +33,7 @@ void setup()
   alto = height;
   ancho= width;
   radio=6*alto/(2*7);
-  angulo_ini=-PI/4;
+  angulo_ini=-(PI+PI/4);
   angulo_fin=PI/4;
   dibujo();
 
@@ -54,7 +54,7 @@ void draw() {
             if (inBuffer != null) {
             
             datos[counter]=inBuffer;           //Se almacena en datos la trama con los mensajes
-            println(int(datos[counter][0]),binary(datos[counter][1]),binary(datos[counter][2]),binary(datos[counter][3]));
+            //println(int(datos[counter][0]),binary(datos[counter][1]),binary(datos[counter][2]),binary(datos[counter][3]));
             
             dibujo();
             strokeWeight(2);
@@ -256,26 +256,28 @@ void dibujo()
       
     for(int k=0;k<=7;k++){
     noFill();
-    arc(ancho/2, alto/2, alto-100-k*86, alto-100-k*86,0, 2*PI); 
+    arc(ancho/2, alto/2, alto-100-k*86, alto-100-k*86,angulo_ini, angulo_fin); 
     }
     stroke(0, 150, 255);
     point(500,350); 
     
-    for(int k=0;k<=11;k++){
+    line(ancho/2,alto/2,ancho/2+340*cos(angulo_ini),alto/2+340*sin(angulo_ini));
+    line(ancho/2,alto/2,ancho/2+340*cos(angulo_fin),alto/2+340*sin(angulo_fin));
+    for(int k=0;k<=9;k++){
     stroke(0, 150, 255);
-    line(ancho/2,alto/2,ancho/2+radio*cos(k*PI/6),alto/2+radio*sin(PI/6*k));
+    line(ancho/2,alto/2,ancho/2+radio*cos(angulo_ini+k*PI/6),alto/2+radio*sin(angulo_ini+PI/6*k));
     }
    
 
-    for(int k=0;k<=11;k++){
+    for(int k=1;k<=8;k++){
     strokeWeight(2);
-    line(ancho/2+(radio+10)*cos(k*PI/6),alto/2+(radio+10)*sin(PI/6*k),ancho/2+(radio+30)*cos(k*PI/6),alto/2+(radio+30)*sin(PI/6*k));  
+    line(ancho/2+(radio+10)*cos(angulo_ini+k*PI/6),alto/2+(radio+10)*sin(angulo_ini+PI/6*k),ancho/2+(radio+30)*cos(angulo_ini+k*PI/6),alto/2+(radio+30)*sin(angulo_ini+PI/6*k));  
     }
     
-    for(int k=0;k<=119;k++){
+    for(int k=1;k<=89;k++){
     stroke(0, 150, 255);
     strokeWeight(1);
-    line(ancho/2+(radio+15)*cos(k*PI/60),alto/2+(radio+15)*sin(PI/60*k),ancho/2+(radio+25)*cos(k*PI/60),alto/2+(radio+25)*sin(PI/60*k));
+    line(ancho/2+(radio+15)*cos(angulo_ini+k*PI/60),alto/2+(radio+15)*sin(angulo_ini+PI/60*k),ancho/2+(radio+25)*cos(angulo_ini+k*PI/60),alto/2+(radio+25)*sin(angulo_ini+PI/60*k));
     }
     
   
