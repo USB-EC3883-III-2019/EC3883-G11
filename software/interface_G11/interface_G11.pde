@@ -28,7 +28,7 @@
 /*{!!--Variables de adquisicion--!!}*/ 
   byte[] inBuffer = new byte[4];             // Se determinan la cantidad de bytes esperados: tamaño de buffer
   Serial myPort;  // Create object from Serial class
-  byte [][] datos= new byte[73][4];
+  byte [] datos= new byte[4];
   int IR;//Infra Rojo
   int US;// Ultra Sonido
   int counter;
@@ -57,7 +57,7 @@ void setup()
                  // Green es el color de los arcos y lineas que se dibujan 
   output = createWriter("Posiciones.txt"); //se crea el documento donde se guardaran las posiciones cuando se clickee en SAVE
   
-  String portName = Serial.list()[0]; 
+  String portName = Serial.list()[3]; 
   myPort = new Serial(this, portName, 115200);
    //wait=10;
    //time=millis();
@@ -67,8 +67,8 @@ void setup()
   
 void draw() {
     
-            if(counter <= 71)
-            {
+            //if(counter <= 70)
+            //{
             // /*codigo de prueba*/
             // while(millis()-time < wait) //Timer
             //{ };
@@ -81,40 +81,43 @@ void draw() {
             //----fin codigo de prueba-----//
               
             while (myPort.available() > 0 ) {           // Cada vez que haya algo en el puerto se lee
-            inBuffer = myPort.readBytes();             // Y se guarda en inBuffer
+             inBuffer = myPort.readBytes();             // Y se guarda en inBuffer
              myPort.readBytes(inBuffer);
             
             if (inBuffer != null) {
             
-            datos[counter]=inBuffer;           //Se almacena en datos la trama con los mensajes
-            println(int(datos[counter][0]),int(datos[counter][1]),int(datos[counter][2]),int(datos[counter][3]));
+            //if(counter<=71){
             
+            datos=inBuffer;           //Se almacena en datos la trama con los mensajes
+            //println(datos);
+            println(int(datos[0]),int(datos[1]),int(datos[2]),int(datos[3]));
             
+            if(int(datos[0])==71 || int(datos[0])==0) counter=0;
             
             if(sonar_mode==true){ //Si se presiono el boton SONAR (SONAR se muestra por defecto)
             dibujo(green);        //Refresca la pantalla y muestra todo en verde, cambiar los colores es facil (ir a preambulo)
             strokeWeight(2);          
             stroke(#FFFFFF);
-            line(ancho/2,alto/2,ancho/2+radio*cos(int(datos[counter][0])*PI/48+angulo_ini),alto/2+radio*sin(int(datos[counter][0])*PI/48+angulo_ini)); //Linea 
+            line(ancho/2,alto/2,ancho/2+radio*cos(int(datos[0])*PI/48+angulo_ini),alto/2+radio*sin(int(datos[0])*PI/48+angulo_ini)); //Linea 
             stroke(#00FF00);
             sonar(datos, sonar, counter); //La funcion sonar recibe los datos, la matriz sonar para guardar los datos e imprimirlos todos en cada ciclo 
-                                          // La funcion sonar imprime los circulos y hace el desentramado 
+            counter++;                              // La funcion sonar imprime los circulos y hace el desentramado 
             }
+            
 
             if(lidar_mode==true){ // Si se presiono el boton LIDAR
             dibujo(red);
             strokeWeight(2);     
             stroke(#FFFFFF);
-            line(ancho/2,alto/2,ancho/2+radio*cos(int(datos[counter][0])*PI/48+angulo_ini),alto/2+radio*sin(int(datos[counter][0])*PI/48+angulo_ini));
-            lidar(datos, lidar, counter);
+            line(ancho/2,alto/2,ancho/2+radio*cos(int(datos[0])*PI/48+angulo_ini),alto/2+radio*sin(int(datos[0])*PI/48+angulo_ini));
+            //lidar(datos, lidar, counter);
             }
             
-            
-            
-            } //fin del if inbuffer
-            }//Fin del while myport
-             counter++;  //fin del if
-            }else counter=0;
+            //ounter++;      //fin del if
+            //}else counter=0;
+            }               //fin del if inbuffer
+            }                //Fin del while myport
+             
     
          
 }//Fin del draw
@@ -272,32 +275,32 @@ void mouseClicked()  // Cada vez que se hace click se llama esta funcion y se ev
 //   }
 //}
 
-void lidar(byte Datos [][], int Lidar [][], int Counter)
-{
-            IR=(int((Datos[counter][2] & 31))<< 7) + (int((Datos[counter][3] & 127)));
-            IR=IR*16;
-            IR=int(2007193.03*pow(IR,-1.201));
-            //IR=int(40*sin(second()*PI/40)+40); //PRUEBA
-            //println(IR);
-            IR=int(map(float(IR),0,80,0,radio));
-            Lidar[Counter][0]=IR;
-            Lidar[Counter][1]=datos[Counter][0];
-            //println(Lidar[Counter][0],Lidar[Counter][1]);
-            stroke(#00FF00);
-            for(int i=0; i<=Counter;i++){
-            if(lidar[i][0]!=0) circle(ancho/2+Lidar[i][0]*cos( Lidar[i][1]*PI/48+angulo_ini),alto/2+Lidar[i][0]*sin(Lidar[i][1]*PI/48+angulo_ini), 10);
-            }
-}
+//void lidar(byte Datos [][], int Lidar [][], int Counter)
+//{
+//            IR=(int((Datos[counter][2] & 31))<< 7) + (int((Datos[counter][3] & 127)));
+//            IR=IR*16;
+//            IR=int(2007193.03*pow(IR,-1.201));
+//            //IR=int(40*sin(second()*PI/40)+40); //PRUEBA
+//            //println(IR);
+//            IR=int(map(float(IR),0,80,0,radio));
+//            Lidar[Counter][0]=IR;
+//            Lidar[Counter][1]=datos[Counter][0];
+//            //println(Lidar[Counter][0],Lidar[Counter][1]);
+//            stroke(#00FF00);
+//            for(int i=0; i<=Counter;i++){
+//            if(lidar[i][0]!=0) circle(ancho/2+Lidar[i][0]*cos( Lidar[i][1]*PI/48+angulo_ini),alto/2+Lidar[i][0]*sin(Lidar[i][1]*PI/48+angulo_ini), 10);
+//            }
+//}
 
-void sonar(byte Datos [][], int Sonar [][], int Counter)
+void sonar(byte Datos [], int Sonar [][], int Counter)
 {
-            US=(int((Datos[counter][2] & 31))<< 7) + (int((Datos[counter][3] & 127)));
-            US=(int((datos[Counter][1] & 127))<< 2) + (int((datos[Counter][2] & 96))>>5);
+            US=(int((Datos[2] & 31))<< 7) + (int((Datos[3] & 127)));
+            US=(int((datos[1] & 127))<< 2) + (int((datos[2] & 96))>>5);
             //println((US));
             US=int(US*61.035156/58);
             US=int(map(float(US),0,80,0,radio));
             Sonar[Counter][0]=US;
-            Sonar[Counter][1]=datos[Counter][0];
+            Sonar[Counter][1]=datos[0];
             stroke(#FF0000);
             for(int i=0; i<=Counter;i++){
             if(Sonar[i][0]!=0) circle(ancho/2+Sonar[i][0]*cos( Sonar[i][1]*PI/48+angulo_ini),alto/2+Sonar[i][0]*sin(Sonar[i][1]*PI/48+angulo_ini), 10);
