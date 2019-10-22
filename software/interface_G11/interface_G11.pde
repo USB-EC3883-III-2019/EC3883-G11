@@ -15,22 +15,23 @@
   int [] red={247, 0,55};
   
   /*{!!--Variables de graficacion--!!}*/
-  
-  int reversa; //define el sentido del recorrido de la linea de posición
-  int sw; // conmuta el sentido del recorrido 
+ 
   boolean lidar_mode;
   boolean sonar_mode;
+  boolean fusion_mode;
   int [][] lidar= new int[72][2];
   int [][] sonar= new int[72][2]; 
-
-  
+  int [][] fusion= new int[72][2]; 
+  boolean stop=false; 
+  int bground=0;
  
 /*{!!--Variables de adquisicion--!!}*/ 
   byte[] inBuffer = new byte[4];             // Se determinan la cantidad de bytes esperados: tamaño de buffer
   Serial myPort;  // Create object from Serial class
   byte [] datos= new byte[4];
-  int IR;//Infra Rojo
-  int US;// Ultra Sonido
+  int ir;//Infra Rojo
+  int us;// Ultra Sonido
+  int fu;// fusion
   int counter;
   
   PrintWriter output;
@@ -53,11 +54,12 @@ void setup()
   counter=0;
   lidar_mode= false;
   sonar_mode= true;
-  dibujo(green); // Se empieza mostrando el SONAR, si se quiere ver el LIDAR se debe presionar el boton
+  fusion_mode= false;
+  dibujo(green,bground); // Se empieza mostrando el SONAR, si se quiere ver el LIDAR se debe presionar el boton
                  // Green es el color de los arcos y lineas que se dibujan 
   output = createWriter("Posiciones.txt"); //se crea el documento donde se guardaran las posiciones cuando se clickee en SAVE
   
-  String portName = Serial.list()[3]; 
+  String portName = Serial.list()[0]; 
   myPort = new Serial(this, portName, 115200);
    //wait=10;
    //time=millis();
@@ -80,41 +82,53 @@ void draw() {
             
             //----fin codigo de prueba-----//
               
-            while (myPort.available() > 0 ) {           // Cada vez que haya algo en el puerto se lee
+            while (myPort.available() > 0 && stop==false) {           // Cada vez que haya algo en el puerto se lee
              inBuffer = myPort.readBytes();             // Y se guarda en inBuffer
              myPort.readBytes(inBuffer);
             
             if (inBuffer != null) {
-            
-            //if(counter<=71){
-            
+                        
             datos=inBuffer;           //Se almacena en datos la trama con los mensajes
-            //println(datos);
             println(int(datos[0]),int(datos[1]),int(datos[2]),int(datos[3]));
-            
+            stroke(255,255,255);
+            if(int(datos[1] & 64)==0){
+            bground=#0522AD;
+            }else bground=0;;
+            stroke(0);
             if(int(datos[0])==71 || int(datos[0])==0) counter=0;
             
             if(sonar_mode==true){ //Si se presiono el boton SONAR (SONAR se muestra por defecto)
-            dibujo(green);        //Refresca la pantalla y muestra todo en verde, cambiar los colores es facil (ir a preambulo)
+            dibujo(green,bground);        //Refresca la pantalla y muestra todo en verde, cambiar los colores es facil (ir a preambulo)
             strokeWeight(2);          
             stroke(#FFFFFF);
-            line(ancho/2,alto/2,ancho/2+radio*cos(int(datos[0])*PI/48+angulo_ini),alto/2+radio*sin(int(datos[0])*PI/48+angulo_ini)); //Linea 
+            line(ancho/2,alto/2,ancho/2+radio*cos(int(datos[0])*PI*3/142+angulo_ini),alto/2+radio*sin(int(datos[0])*PI*3/142+angulo_ini)); //Linea 
             stroke(#00FF00);
             sonar(datos, sonar, counter); //La funcion sonar recibe los datos, la matriz sonar para guardar los datos e imprimirlos todos en cada ciclo 
-            counter++;                              // La funcion sonar imprime los circulos y hace el desentramado 
+            counter++;                             
             }
             
 
             if(lidar_mode==true){ // Si se presiono el boton LIDAR
-            dibujo(red);
+            dibujo(red,bground);
             strokeWeight(2);     
             stroke(#FFFFFF);
-            line(ancho/2,alto/2,ancho/2+radio*cos(int(datos[0])*PI/48+angulo_ini),alto/2+radio*sin(int(datos[0])*PI/48+angulo_ini));
-            //lidar(datos, lidar, counter);
+            line(ancho/2,alto/2,ancho/2+radio*cos(int(datos[0])*PI*3/142+angulo_ini),alto/2+radio*sin(int(datos[0])*PI*3/142+angulo_ini));
+            stroke(#00FF00);
+            lidar(datos, lidar, counter);
+            counter++;
             }
-            
-            //ounter++;      //fin del if
-            //}else counter=0;
+
+            if(fusion_mode==true){ // Si se presiono el boton Fusion
+            dibujo(violet,bground);
+            strokeWeight(2);     
+            stroke(#FFFFFF);
+            line(ancho/2,alto/2,ancho/2+radio*cos(int(datos[0])*PI*3/142+angulo_ini),alto/2+radio*sin(int(datos[0])*PI*3/142+angulo_ini));
+            stroke(#00FF00);
+            lidar(datos, lidar, counter);
+            counter++;
+            }
+
+
             }               //fin del if inbuffer
             }                //Fin del while myport
              
@@ -129,10 +143,10 @@ void draw() {
 
 
 // Funcion encargada de todos los objetos mostrados en pantalla
-void dibujo(int Color[])
+void dibujo(int Color[],int BG)
 {
-    //clear(); 
-    background(0);
+    //clear();
+    background(BG);
   
     strokeWeight(1);
     stroke(Color[0], Color[1], Color[2]);
@@ -177,14 +191,7 @@ void dibujo(int Color[])
     text("80 cm",ancho/2-radio,645);
     text("80 cm",ancho/2+radio,645);
    
-    //for(int k=0;k<=59;k++){
-    //stroke(Color[0], Color[1], Color[2]);
-    //strokeWeight(1);
-    //line(130, alto/2+radio-10*k,140 ,alto/2+radio-10*k);
-    //}
-    //line(0, alto/2+radio,1000 ,alto/2+radio);
-
-    
+    boton(500+450,350-100,"PAUSE",500+430,355-105,blue);
     boton(500+450,350,"SONAR",500+430,355,green);
     boton(500+450,350+100,"LIDAR",500+430,350+105, red);
     boton(500+450,350+200,"FUSION",500+430,350+205, violet);
@@ -210,7 +217,7 @@ void mouseClicked()  // Cada vez que se hace click se llama esta funcion y se ev
     sonar_mode= true;
     lidar_mode= false;
     sonar= new int[72][2];
-    dibujo(green);
+    dibujo(green,bground);
 
   }
   //Boton 2
@@ -220,21 +227,23 @@ void mouseClicked()  // Cada vez que se hace click se llama esta funcion y se ev
       lidar_mode= true;  
       lidar= new int[72][2];
       println(lidar[0]);
-      dibujo(red);
+      dibujo(red,bground);
       
   }
 
-//  //Boton3
-//  if(buttomPressed(mouseX, mouseY,ancho-50-35,ancho-50+35,195,245)==true)
-//  {
-//   if(stop==true){
-//     stop=false;}else if(stop==false){
-//                         stop=true;
-//                         x1=10;
-//                         x2=10;
-//                         dibujo();
-//                          }                      
-//  }
+  //Boton3
+  if(buttomPressed(mouseX, mouseY,500+450-35,500+450+35,350-100-35,350-100+35)==true)
+  {
+     if(stop==true) stop=false;
+     else if(stop==false){
+                           stop=true;
+                           sonar= new int[72][2];
+                           lidar= new int[72][2];                           
+                           println("Pause");  
+                           
+                         }
+                            
+  }
   //Boton4
     if(buttomPressed(mouseX, mouseY,500+450-35,500+450+35,350+300-35, 350+300+35)==true)
     {
@@ -243,16 +252,18 @@ void mouseClicked()  // Cada vez que se hace click se llama esta funcion y se ev
       output.flush(); // Escribe la data latente en el archivo
       println("Guardado");
     }
+
+   //Boton5
+    if(buttomPressed(mouseX, mouseY,500+450-35,500+450+35,350+200-35, 350+200+35)==true) 
+  {
+      println("presionado boton 3");
+      if(sonar_mode==true) sonar_mode=false;
+      else if(lidar_mode==true) lidar_mode=false;
+      fusion_mode= true;
+      fusion= new int[72][2];
+      dibujo(red,bground);
+   }
 }
-//   //Boton5
-//    if(buttomPressed(mouseX, mouseY,ancho-50-35,ancho-50+35,355,405)==true)
-//  {
-//   if(ch2==true){
-//       ch2=false;}else if(ch2==false) ch2=true;
-//       x1=10;
-//       x2=10;
-//       dibujo();
-//   }
 //      //Boton6
 //    if(buttomPressed(mouseX, mouseY,ancho-50-35,ancho-50+35,435,485)==true)
 //  {
@@ -275,37 +286,90 @@ void mouseClicked()  // Cada vez que se hace click se llama esta funcion y se ev
 //   }
 //}
 
-//void lidar(byte Datos [][], int Lidar [][], int Counter)
-//{
-//            IR=(int((Datos[counter][2] & 31))<< 7) + (int((Datos[counter][3] & 127)));
-//            IR=IR*16;
-//            IR=int(2007193.03*pow(IR,-1.201));
-//            //IR=int(40*sin(second()*PI/40)+40); //PRUEBA
-//            //println(IR);
-//            IR=int(map(float(IR),0,80,0,radio));
-//            Lidar[Counter][0]=IR;
-//            Lidar[Counter][1]=datos[Counter][0];
-//            //println(Lidar[Counter][0],Lidar[Counter][1]);
-//            stroke(#00FF00);
-//            for(int i=0; i<=Counter;i++){
-//            if(lidar[i][0]!=0) circle(ancho/2+Lidar[i][0]*cos( Lidar[i][1]*PI/48+angulo_ini),alto/2+Lidar[i][0]*sin(Lidar[i][1]*PI/48+angulo_ini), 10);
-//            }
-//}
+void lidar(byte Datos [], int Lidar [][], int Counter)
+{
+            ir=(int((Datos[2] & 31))<< 7) + (int((Datos[3] & 127)));
+            ir=int(23045.73065*pow(ir,-1.015));
+            ir=int(map(float(ir),0,80,0,340));
+         
+            if(ir>340)ir=340;
+            Lidar[Counter][0]=ir;
+            Lidar[Counter][1]=Datos[0];
+            
+            stroke(#00FF00);
+            
+            for(int i=0; i<=Counter;i++){
+            if(Lidar[i][0]!=0) circle(ancho/2+Lidar[i][0]*cos( Lidar[i][1]*PI/47.5+angulo_ini),alto/2+Lidar[i][0]*sin(Lidar[i][1]*PI/47.5+angulo_ini), 10);
+            };
+            
+            if(int(Datos[1] & 64)==0){
+            fill(#FFFFFF);
+            text("Filter OFF",ancho/2-10,680);
+            }else {fill(#FFFFFF);
+            text("Filter ON",ancho/2-10,680);}
+            fill(0);
+}
 
 void sonar(byte Datos [], int Sonar [][], int Counter)
 {
-            US=(int((Datos[2] & 31))<< 7) + (int((Datos[3] & 127)));
-            US=(int((datos[1] & 127))<< 2) + (int((datos[2] & 96))>>5);
+            us=(int((Datos[1] & 63))<< 2) + (int((Datos[2] & 96))>>5);
             //println((US));
-            US=int(US*61.035156/58);
-            US=int(map(float(US),0,80,0,radio));
-            Sonar[Counter][0]=US;
-            Sonar[Counter][1]=datos[0];
+            us=int(us*61.035156/58);
+            us=int(map(float(us),0,80,0,340));
+            
+            if(us>340)us=340;
+            
+            Sonar[Counter][0]=us;
+            Sonar[Counter][1]=Datos[0];
+            
             stroke(#FF0000);
+            
             for(int i=0; i<=Counter;i++){
-            if(Sonar[i][0]!=0) circle(ancho/2+Sonar[i][0]*cos( Sonar[i][1]*PI/48+angulo_ini),alto/2+Sonar[i][0]*sin(Sonar[i][1]*PI/48+angulo_ini), 10);
+            if(Sonar[i][0]!=0) circle(ancho/2+Sonar[i][0]*cos( Sonar[i][1]*PI/47.5+angulo_ini),alto/2+Sonar[i][0]*sin(Sonar[i][1]*PI/47.5+angulo_ini), 10);
             };
-   
+             
+            if(int(Datos[1] & 64)==0){
+            fill(#FFFFFF);
+            text("Filter OFF",ancho/2-10,680);
+            }else {fill(#FFFFFF);
+            text("Filter ON",ancho/2-10,680);}
+            fill(0);
+}
+
+void fusion(byte Datos [], int Fusion [][], int Counter)
+{
+            us=(int((Datos[1] & 63))<< 2) + (int((Datos[2] & 96))>>5);
+            us=int(us*61.035156/58);
+            //us=int(map(float(us),0,80,0,340));
+            
+            ir=(int((Datos[2] & 31))<< 7) + (int((Datos[3] & 127)));
+            ir=int(23045.73065*pow(ir,-1.015));
+            //ir=int(map(float(ir),0,80,0,340));
+            
+            fu=int(abs(float(ir-us)));
+            if(fu>=1) fu=int(map(float(ir),0,80,0,340));
+            else fu=int(map(float(us),0,80,0,340));
+            
+            if(fu>340){fu=340;
+            fill(#FFFFFF);
+            text("Fuera del rango",ancho/2-10,640);
+             };
+            
+            Fusion[Counter][0]=fu;
+            Fusion[Counter][1]=Datos[0];
+            
+            stroke(#FF0000);
+            
+            for(int i=0; i<=Counter;i++){
+            if(Fusion[i][0]!=0) circle(ancho/2+Fusion[i][0]*cos(Fusion[i][1]*PI/47.5+angulo_ini),alto/2+Fusion[i][0]*sin(Fusion[i][1]*PI/47.5+angulo_ini), 10);
+            };
+             
+            if(int(Datos[1] & 64)==0){
+            fill(#FFFFFF);
+            text("Filter OFF",ancho/2-10,680);
+            }else {fill(#FFFFFF);
+            text("Filter ON",ancho/2-10,680);}
+            fill(0);
 }
  
 
