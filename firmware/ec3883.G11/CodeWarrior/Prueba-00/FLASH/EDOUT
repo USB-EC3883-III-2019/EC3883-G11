@@ -1,8 +1,0 @@
-ERROR L1822: Symbol Cap1_Init in file C:/Users/p/Documents/Universidad/Materias/Lab de Proyectos/Proyectos 3/firmware/EC3883.G11/CodeWarrior/Prueba-00/FLASH/Generated_Code\Cpu_c.obj is undefined
-ERROR L1822: Symbol TI1_Init in file C:/Users/p/Documents/Universidad/Materias/Lab de Proyectos/Proyectos 3/firmware/EC3883.G11/CodeWarrior/Prueba-00/FLASH/Generated_Code\Cpu_c.obj is undefined
-ERROR L1822: Symbol PWM1_Init in file C:/Users/p/Documents/Universidad/Materias/Lab de Proyectos/Proyectos 3/firmware/EC3883.G11/CodeWarrior/Prueba-00/FLASH/Generated_Code\Cpu_c.obj is undefined
-ERROR L1822: Symbol AD1_Init in file C:/Users/p/Documents/Universidad/Materias/Lab de Proyectos/Proyectos 3/firmware/EC3883.G11/CodeWarrior/Prueba-00/FLASH/Generated_Code\Cpu_c.obj is undefined
-ERROR L1822: Symbol TI1_Interrupt in file C:/Users/p/Documents/Universidad/Materias/Lab de Proyectos/Proyectos 3/firmware/EC3883.G11/CodeWarrior/Prueba-00/FLASH/Generated_Code\Vectors_c.obj is undefined
-ERROR L1822: Symbol AD1_Interrupt in file C:/Users/p/Documents/Universidad/Materias/Lab de Proyectos/Proyectos 3/firmware/EC3883.G11/CodeWarrior/Prueba-00/FLASH/Generated_Code\Vectors_c.obj is undefined
-ERROR L1822: Symbol Cap1_IntOverflow in file C:/Users/p/Documents/Universidad/Materias/Lab de Proyectos/Proyectos 3/firmware/EC3883.G11/CodeWarrior/Prueba-00/FLASH/Generated_Code\Vectors_c.obj is undefined
-ERROR L1822: Symbol Cap1_Interrupt in file C:/Users/p/Documents/Universidad/Materias/Lab de Proyectos/Proyectos 3/firmware/EC3883.G11/CodeWarrior/Prueba-00/FLASH/Generated_Code\Vectors_c.obj is undefined

@@ -1,0 +1,57 @@
+<CodeGenerationInfo>
+  <ToolchainSettings>
+    <option>
+      <name>PE_G_4PEx_ToolChain_Compiler_SearchUserPaths</name>
+      <values lines_count="2">
+        <Line>"${ProjDirPath}/Sources"</Line>
+        <Line>"${ProjDirPath}/Generated_Code"</Line>
+      </values>
+    </option>
+  </ToolchainSettings>
+  <GeneratedFilesList>
+    <GeneratedByPE>
+      <File Name="Generated_Code/Cap1.c" FileDate="2019-10-16, 14:21:49" FileAge="1571250109251" FileType="45637" CompNumb="13" />
+      <File Name="Documentation/prueba_00.txt" FileDate="2019-10-21, 13:34:27" FileAge="1571679267540" FileType="3072" />
+      <File Name="Generated_Code/PE_Timer.h" FileDate="2019-10-14, 14:19:41" FileAge="1571077181647" FileType="45637" />
+      <File Name="Documentation/prueba_00_SIGNALS.txt" FileDate="2019-10-30, 10:26:40" FileAge="1572445600417" FileType="3072" />
+      <File Name="Generated_Code/Vectors.c" FileDate="2019-10-21, 11:35:12" FileAge="1571672112919" FileType="45637" CompNumb="4" />
+      <File Name="Generated_Code/TI1.h" FileDate="2019-10-23, 12:42:18" FileAge="1571848938342" FileType="45637" CompNumb="14" />
+      <File Name="Generated_Code/PE_Timer.c" FileDate="2019-10-14, 14:19:41" FileAge="1571077181653" FileType="45637" />
+      <File Name="Generated_Code/TI1.c" FileDate="2019-10-23, 12:42:18" FileAge="1571848938360" FileType="45637" CompNumb="14" />
+      <File Name="Project_Settings/Linker_Files/ProcessorExpert.prm" FileDate="2019-10-07, 12:32:03" FileAge="1570465923732" FileType="8" CompNumb="4" />
+      <File Name="Generated_Code/Bit6.h" FileDate="2019-10-21, 10:47:26" FileAge="1571669246589" FileType="45637" CompNumb="33" />
+      <File Name="Generated_Code/AD1.h" FileDate="2019-10-28, 14:23:12" FileAge="1572286992519" FileType="45637" CompNumb="28" />
+      <File Name="Generated_Code/Bit6.c" FileDate="2019-10-21, 10:47:26" FileAge="1571669246640" FileType="45637" CompNumb="33" />
+      <File Name="Generated_Code/AD1.c" FileDate="2019-10-28, 14:23:12" FileAge="1572286992583" FileType="45637" CompNumb="28" />
+      <File Name="Generated_Code/PE_Const.h" FileDate="2019-10-07, 12:32:03" FileAge="1570465923806" FileType="45637" />
+      <File Name="Generated_Code/Bit5.h" FileDate="2019-10-09, 12:47:14" FileAge="1570639634028" FileType="45637" CompNumb="12" />
+      <File Name="Generated_Code/PE_Types.h" FileDate="2019-10-07, 12:32:03" FileAge="1570465923812" FileType="45637" />
+      <File Name="Generated_Code/PWM1.h" FileDate="2019-10-23, 12:42:55" FileAge="1571848975538" FileType="45637" CompNumb="24" />
+      <File Name="Generated_Code/PE_Error.h" FileDate="2019-10-07, 12:32:03" FileAge="1570465923809" FileType="45637" />
+      <File Name="Generated_Code/AS1.h" FileDate="2019-10-21, 10:39:44" FileAge="1571668784047" FileType="45637" CompNumb="29" />
+      <File Name="Generated_Code/Bit5.c" FileDate="2019-10-09, 12:47:14" FileAge="1570639634052" FileType="45637" CompNumb="12" />
+      <File Name="Generated_Code/PWM1.c" FileDate="2019-10-23, 12:42:55" FileAge="1571848975545" FileType="45637" CompNumb="24" />
+      <File Name="Generated_Code/AS1.c" FileDate="2019-10-21, 10:39:44" FileAge="1571668784044" FileType="45637" CompNumb="29" />
+      <File Name="Generated_Code/Bit4.h" FileDate="2019-10-09, 13:35:42" FileAge="1570642542205" FileType="45637" CompNumb="11" />
+      <File Name="Generated_Code/Bit4.c" FileDate="2019-10-09, 13:35:42" FileAge="1570642542255" FileType="45637" CompNumb="11" />
+      <File Name="Generated_Code/Bit3.h" FileDate="2019-10-09, 13:35:42" FileAge="1570642542194" FileType="45637" CompNumb="10" />
+      <File Name="Generated_Code/Bit3.c" FileDate="2019-10-09, 13:35:42" FileAge="1570642542200" FileType="45637" CompNumb="10" />
+      <File Name="Documentation/prueba_00_Settings.xml" FileDate="2019-10-28, 14:23:12" FileAge="1572286992930" FileType="3072" />
+      <File Name="Generated_Code/KB1.h" FileDate="2019-10-21, 14:34:58" FileAge="1571682898906" FileType="45637" CompNumb="34" />
+      <File Name="Generated_Code/Bit2.h" FileDate="2019-10-09, 13:35:42" FileAge="1570642542182" FileType="45637" CompNumb="9" />
+      <File Name="Generated_Code/KB1.c" FileDate="2019-10-21, 14:34:58" FileAge="1571682898897" FileType="45637" CompNumb="34" />
+      <File Name="Generated_Code/Cpu.h" FileDate="2019-10-21, 10:41:18" FileAge="1571668878106" FileType="45637" CompNumb="4" />
+      <File Name="Generated_Code/IO_Map.h" FileDate="2019-10-07, 12:32:03" FileAge="1570465923757" FileType="45637" />
+      <File Name="Generated_Code/Bit2.c" FileDate="2019-10-09, 13:35:42" FileAge="1570642542188" FileType="45637" CompNumb="9" />
+      <File Name="Generated_Code/Cpu.c" FileDate="2019-10-21, 14:34:58" FileAge="1571682898942" FileType="45637" CompNumb="4" />
+      <File Name="Generated_Code/IO_Map.c" FileDate="2019-10-07, 12:32:03" FileAge="1570465923753" FileType="45637" />
+      <File Name="Generated_Code/Bit1.h" FileDate="2019-10-09, 13:35:42" FileAge="1570642542170" FileType="45637" CompNumb="8" />
+      <File Name="Sources/Events.h" FileDate="2019-10-21, 11:35:12" FileAge="1571672112947" FileType="131328" />
+      <File Name="Generated_Code/Bit1.c" FileDate="2019-10-09, 13:35:42" FileAge="1570642542176" FileType="45637" CompNumb="8" />
+      <File Name="Sources/Events.c" FileDate="2019-10-23, 13:07:39" FileAge="1571850459925" FileType="131328" />
+      <File Name="Generated_Code/Cap1.h" FileDate="2019-10-16, 14:21:49" FileAge="1571250109235" FileType="45637" CompNumb="13" />
+      <File Name="Sources/main.c" FileDate="2019-10-30, 10:07:29" FileAge="1572444449304" FileType="128" />
+    </GeneratedByPE>
+  </GeneratedFilesList>
+  <CodeGenReference>62</CodeGenReference>
+</CodeGenerationInfo>
